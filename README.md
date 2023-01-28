@@ -6,14 +6,44 @@ API Implementation of [Cloudflare turnstile](https://www.cloudflare.com/products
 ## Installation
 
 ```bash
-go get github.com:flux-soft/go-turnstile
+go get github.com/flux-soft/go-turnstile
 ```
 
 ## Usage
 Here's an example of usage:
 
 ```go
+package main
 
+import (
+	"log"
+	"github.com/flux-soft/go-turnstile"
+)
+
+func main() {
+    validator := turnstile.New("SECRET_KEY", turnstile.DEFAULT_TIMEOUT)
+    // Captcha token receive from header cf-turnstile-response
+    // Remote IP isn't required, if you wouldn't pass IP then insert ""
+	response, err := validator.Verify("CAPTCHA_TOKEN", "REMOTE_IP")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	if !response.Success {
+		// Failed verify captcha
+	}
+    // or 
+    if !response.IsSuccess()) {
+        //
+    }
+
+    if response.HasErrors() {
+        for k, v := range response.ErrorCodes {
+            println(v)
+        }
+    }
+}
 ```
 
 ```html

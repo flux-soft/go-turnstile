@@ -34,7 +34,7 @@ func main() {
 		// Failed verify captcha
 	}
     // or 
-    if !response.IsSuccess()) {
+    if !response.IsSuccess() {
         //
     }
 
